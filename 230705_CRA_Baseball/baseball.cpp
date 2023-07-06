@@ -25,7 +25,23 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
+		bool solved = false;
+		//
+		int strikeCnt = getStrikeCnt(guessNumber);
+		//
+		int ballCnt = getBallCnt(guessNumber);
 
+		return { solved, strikeCnt, ballCnt };
+	}
+
+
+	GuessResult guess_CK(const string& guessNumber)
+	{
+		assertIllegalArgument(guessNumber);
+		if (guessNumber == question) {
+			return { true, 3, 0 };
+		}
+		//
 		int strikeCnt = 0;
 		int ballCnt = 0;
 		for (int i = 0; i < guessNumber.size(); i++)
@@ -66,6 +82,32 @@ private:
 		}
 		if (isDuplicatedNumber(guessNumber))
 			throw invalid_argument("Must not have the same number");
+	}
+
+	int getStrikeCnt(const string&  guessNumber)
+	{
+		int result = 0;
+		for (int i = 0; i < guessNumber.size(); i++)
+		{
+			if (question[i] != guessNumber[i]) continue;
+			result++;
+		}
+		return result;
+	}
+
+	int getBallCnt(const string& guessNumber)
+	{
+		int result = 0;
+		for (int i = 0; i < guessNumber.size(); i++)
+		{
+			for (int x = 0; x < question.size(); x++)
+			{
+				if(i == x) continue;
+				if (question[x] == guessNumber[i])
+					result++;
+			}
+		}
+		return result;
 	}
 
 };
