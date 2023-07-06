@@ -26,7 +26,22 @@ public:
 			return { true, 3, 0 };
 		}
 
-		return { false, 0, 0 };
+		int strikeCnt = 0;
+		int ballCnt = 0;
+		for (int i = 0; i < guessNumber.size(); i++)
+		{
+			if (question[i] == guessNumber[i])
+				strikeCnt++;
+			else
+			{
+				if (question.find(guessNumber[i]) != string::npos)
+					ballCnt++;
+			}
+
+		}
+		//2strike 0 ball
+		//1strike 2 ball
+		return { false, strikeCnt, ballCnt };
 	}
 
 private:
